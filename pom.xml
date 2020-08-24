@@ -5,37 +5,51 @@
 		http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<!--use the scijava parent pom for imagej development-->
+  	<!--note this comes with many dependencies already declared-->
+	  <!--try to use these instead of declaring own-->
+	  
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
 		<version>26.0.0</version>
 		<relativePath />
 	</parent>
-
-	<groupId>com.mycompany</groupId>
-	<artifactId>Process_Pixels</artifactId>
+	  
+	<groupId>io.github.stevenjwest</groupId>
+	<artifactId>High_Pass_Gaussian_Filter</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 
-	<name>Process Pixels</name>
-	<description>A Maven project implementing an ImageJ 1.x plugin.</description>
-	<url>http://mycompany.com/imagej/process-pixels/</url>
-	<inceptionYear>2012</inceptionYear>
+
+	<name>High_Pass_Gaussian_Filter</name>
+
+	<description>High-Pass Gaussian Filter plugin</description>
+
+	<url>https://github.com/stevenjwest/High_Pass_Gaussian_Filter</url>
+
+	<inceptionYear>2020</inceptionYear>
+
 	<organization>
-		<name>My Company</name>
-		<url>http://mycompany.com/</url>
+		<name>theNaturalObserver</name>
+		<url>http://www.thenaturalobserver.co.uk/</url>
 	</organization>
-	<licenses>
-		<license>
-			<name>Simplified BSD License</name>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+
+	<!--Modified licence to GNU GPLv3 from default in imagej-example-legacy-plugin of bsd_2-->
+  <licenses>
+    <license>
+      <name>GNU General Public License v3.0 only</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+      <distribution>repo</distribution>
+      <comments>The GNU General Public License is a free, copyleft license for software and other kinds of works.</comments>
+    </license>
+  </licenses>
 
 	<developers>
+	  
 		<developer>
-			<id>ctrueden</id>
-			<name>Curtis Rueden</name>
-			<url>https://imagej.net/User:Rueden</url>
+			<id>sjwest</id>
+			<name>Steven J. West</name>
+			<url>https://github.com/stevenjwest</url>
 			<roles>
 				<role>lead</role>
 				<role>developer</role>
@@ -45,36 +59,16 @@
 				<role>maintainer</role>
 			</roles>
 		</developer>
+
 	</developers>
+
+	<!--MUST include a contributor-->
+	  
 	<contributors>
 		<contributor>
-			<name>Johannes Schindelin</name>
-			<url>https://imagej.net/User:Schindelin</url>
-			<roles><role>founder</role></roles>
-			<properties><id>dscho</id></properties>
-		</contributor>
-		<contributor>
-			<name>Olivier Burri</name>
-			<url>https://imagej.net/User:Oburri</url>
-			<properties><id>lacan</id></properties>
-		</contributor>
-		<contributor>
-			<name>Mark Hiner</name>
-			<url>https://imagej.net/User:Hinerm</url>
-			<properties><id>hinerm</id></properties>
-		</contributor>
-		<contributor>
-			<name>Jules Maselbas</name>
-		</contributor>
-		<contributor>
-			<name>Kota Miura</name>
-			<url>https://imagej.net/User:Miura</url>
-			<properties><id>miura</id></properties>
-		</contributor>
-		<contributor>
-			<name>Yili Zhao</name>
-			<url>https://imagej.net/User:Panovr</url>
-			<properties><id>panovr</id></properties>
+			<name>Steven J. West</name>
+			<url>https://github.com/stevenjwest</url>
+			<properties><id>sjwest</id></properties>
 		</contributor>
 	</contributors>
 
@@ -85,25 +79,28 @@
 		</mailingList>
 	</mailingLists>
 
+	<!--edit PLUGIN_REPO-->
+	
 	<scm>
-		<connection>scm:git:git://github.com/imagej/example-legacy-plugin</connection>
-		<developerConnection>scm:git:git@github.com:imagej/example-legacy-plugin</developerConnection>
+		<connection>scm:git:git://github.com/stevenjwest/High_Pass_Gaussian_Filter</connection>
+		<developerConnection>scm:git:git@github.com:stevenjwest/High_Pass_Gaussian_Filter</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/imagej/example-legacy-plugin</url>
+		<url>https://github.com/stevenjwest/High_Pass_Gaussian_Filter</url>
 	</scm>
+
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/imagej/example-legacy-plugin/issues</url>
+		<url>https://github.com/stevenjwest/High_Pass_Gaussian_Filter/issues</url>
 	</issueManagement>
+
 	<ciManagement>
 		<system>None</system>
 	</ciManagement>
 
 	<properties>
-		<package-name>com.mycompany.imagej</package-name>
-		<main-class>com.mycompany.imagej.Process_Pixels</main-class>
-		<license.licenseName>bsd_2</license.licenseName>
-		<license.copyrightOwners>My Company, Inc.</license.copyrightOwners>
+		<package-name>io.github.stevenjwest</package-name>
+		<license.licenseName>GNU General Public License v3.0 only</license.licenseName>
+		<license.copyrightOwners>Steven J. West</license.copyrightOwners>
 	</properties>
 
 	<dependencies>

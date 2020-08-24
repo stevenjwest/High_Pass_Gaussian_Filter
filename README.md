@@ -1,81 +1,70 @@
-This is an example Maven project implementing an ImageJ 1.x plugin.
+# High-Pass Gaussian Filter
 
-It is intended as an ideal starting point to develop new ImageJ 1.x plugins
-in an IDE of your choice. You can even collaborate with developers using a
-different IDE than you.
 
-* In [Eclipse](http://eclipse.org), for example, it is as simple as
-  _File &#8250; Import... &#8250; Existing Maven Project_.
+This plugin implements a High-Pass Gaussian filter on an imput 3D image.
 
-* In [NetBeans](http://netbeans.org), it is even simpler:
-  _File &#8250; Open Project_.
 
-* The same works in [IntelliJ](http://jetbrains.net).
 
-* If [jEdit](http://jedit.org) is your preferred IDE, you will need the
-  [Maven Plugin](http://plugins.jedit.org/plugins/?MavenPlugin).
+## INSTALLATION
 
-Die-hard command-line developers can use Maven directly by calling `mvn`
-in the project root.
 
-However you build the project, in the end you will have the `.jar` file
-(called *artifact* in Maven speak) in the `target/` subdirectory.
+* At time of writing, the ImageJ Updater is down, so the easiest way to use this plugin, please download the pre-compiled JAR from the wiki, and place the JAR into your plugins folder in ImageJ.
 
-To copy the artifact into the correct place, you can call
-`mvn -Dscijava.app.directory=/path/to/ImageJ.app/`.
-This will not only copy your artifact, but also all the dependencies. Restart
-your ImageJ or call *Help &#8250; Refresh Menus* to see your plugin in the menus.
+    + **A pre-compiled JAR file of this plugin can be downloaded from the [wiki](https://github.com/stevenjwest/High_Pass_Gaussian_Filter/wiki).**
 
-Developing plugins in an IDE is convenient, especially for debugging. To
-that end, the plugin contains a `main` method which sets the `plugins.dir`
-system property (so that the plugin is added to the Plugins menu), starts
-ImageJ, loads an image and runs the plugin. See also
-[this page](https://imagej.net/Debugging#Debugging_plugins_in_an_IDE_.28Netbeans.2C_IntelliJ.2C_Eclipse.2C_etc.29)
-for information how ImageJ makes it easier to debug in IDEs.
 
-Since this project is intended as a starting point for your own
-developments, it is in the public domain.
+* Alternatively, clone this repo and build from source using Maven:
 
-How to use this project as a starting point
-===========================================
 
-1. Visit [this link](https://github.com/imagej/example-legacy-plugin/generate)
-   to create a new repository in your space using this one as a template.
+```bash
 
-2. [Clone your new repository](https://help.github.com/en/articles/cloning-a-repository).
+git clone https://github.com/stevenjwest/High_Pass_Gaussian_Filter.git
+cd High_Pass_Gaussian_Filter
+mvn clean package # cleans any target/ directory, then moves through all maven goals upto package
 
-3. Edit the `pom.xml` file. Every entry should be pretty self-explanatory.
-   In particular, change
-    1. the *artifactId* (**NOTE**: should contain a '_' character)
-    2. the *groupId*, ideally to a reverse domain name your organization owns
-    3. the *version* (note that you typically want to use a version number
-       ending in *-SNAPSHOT* to mark it as a work in progress rather than a
-       final version)
-    4. the *dependencies* (read how to specify the correct
-       *groupId/artifactId/version* triplet
-       [here](https://imagej.net/Maven#How_to_find_a_dependency.27s_groupId.2FartifactId.2Fversion_.28GAV.29.3F))
-    5. the *developer* information
-    6. the *scm* information
+# NB: need Java Version: 1.8.0_101+ for SciJava Maven repository HTTPS support.
 
-4. Remove the `Process_Pixels.java` file and add your own `.java` files
-   to `src/main/java/<package>/` (if you need supporting files -- like icons
-   -- in the resulting `.jar` file, put them into `src/main/resources/`)
 
-5. Edit `src/main/resources/plugins.config`
+# compiled JAR will be available in the target/ directory -> High_Pass_Gaussian_Filter-0.1.0.jar
 
-6. Replace the contents of `README.md` with information about your project.
+# NB for successful build need:
 
-7. Make your initial
-   [commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) and
-   [push the results](https://help.github.com/en/articles/pushing-commits-to-a-remote-repository)!
+#$ java -version
+#java version "1.8.0_221"
+#Java(TM) SE Runtime Environment (build 1.8.0_221-b11)
+#Java HotSpot(TM) 64-Bit Server VM (build 25.221-b11, mixed mode)
 
-### Eclipse: To ensure that Maven copies the plugin to your ImageJ folder
+#$ git --version
+#git version 2.27.0
 
-1. Go to _Run Configurations..._
-2. Choose _Maven Build_
-3. Add the following parameter:
-    - name: `scijava.app.directory`
-    - value: `/path/to/ImageJ.app/`
+#$ mvn --version
+#Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+#Maven home: /usr/local/Cellar/maven/3.6.3_1/libexec
+#Java version: 1.8.0_221, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre
+#Default locale: en_GB, platform encoding: UTF-8
+#OS name: "mac os x", version: "10.13.6", arch: "x86_64", family: "mac"
 
-This ensures that the final `.jar` file will also be copied to
-your ImageJ plugins folder everytime you run the Maven build.
+# NOTE CHECK THE MAVEN JAVA VERSION - if using a version HIGHER than 1.8, should use export JAVA_HOME below to allow maven to see an appropriate
+# version of Java:
+# export JAVA_HOME var for mvn to use - example code here exports 1.8.0_221:
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/
+
+# you can download Java 1.8 for your machine at this or related link: https://docs.oracle.com/javase/10/install/installation-jdk-and-jre-macos.htm
+
+```
+
+
+
+## Why implement this plugin?
+
+
+High-Pass Gaussian filters are useful for applying an isotropic high-pass image filter with a smooth transition.  These are particularly useful for removing very low frequency information from 3D images, such as auto-fluorescence seen throughout imaged tissue.
+
+
+This plugin has been designed for use with the [StereoMate Plugins](https://github.com/stevenjwest/StereoMate):
+
+
+* The recommended SM Threshold Manager workflow is to use a High-Pass Gaussian filter on 3D images to remove low-frequency background fluorescence information in input images.
+
+
+
