@@ -1,3 +1,5 @@
+package io.github.stevenjwest;
+
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -10,7 +12,7 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
-public class HighPassGaussianBlur3D implements PlugIn {
+public class High_Pass_Gaussian_Filter implements PlugIn {
 	
 	ImagePlus imp;
 	
@@ -25,7 +27,7 @@ public class HighPassGaussianBlur3D implements PlugIn {
 		ImagePlus imp = IJ.getImage();
 		
 		if (imp.isComposite() && imp.getNChannels()==imp.getStackSize()) {
-			IJ.error("3D High-Pass Gaussian Blur", "Composite color images not supported");
+			IJ.error("High-Pass Gaussian Filter", "Composite color images not supported");
 			return;
 		}
 		
@@ -43,19 +45,24 @@ public class HighPassGaussianBlur3D implements PlugIn {
 		
 		// duplicate the image:
 		// ImagePlus imp2 = imp.duplicate();
-		
 		ImagePlus imp2 = new ImagePlus("", imp.getStack().duplicate() );
+		
+		// set channels, slices, frames:
+		imp2.setDimensions(imp.getNChannels(), imp.getNSlices(), imp.getNFrames() );
 		
 		imp.startTiming();
 		
 		// use the imported blur into this class - which comments out the updateAndDraw() method on imp!
-		blur(imp2, xsigma, ysigma, zsigma);
+		blur(imp, xsigma, ysigma, zsigma);
 		
 		//imp2.setTitle("imp2");
 		//imp2.show();
 		
 		// now subtract the blurred image from the original image:
-		subtractStack(imp, imp2);
+		subtractStack(imp2, imp);
+		
+		// set the stack from imp2 to imp:
+		imp.setStack( imp2.getImageStack() );
 		
 		// NOW updateAndDraw the original imp:
 		imp.updateAndDraw();
@@ -71,6 +78,7 @@ public class HighPassGaussianBlur3D implements PlugIn {
 		if (sigmaX>0.0 || sigmaY>0.0) {
 			GaussianBlur gb = new GaussianBlur();
 			int channels = stack.getProcessor(1).getNChannels();
+			//IJ.showMessage("Number of channels: "+channels);
 			gb.setNPasses(channels*imp.getStackSize());
 			for (int i=1; i<=imp.getStackSize(); i++) {
 				ImageProcessor ip = stack.getProcessor(i);
