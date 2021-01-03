@@ -18,7 +18,7 @@
 	  
 	<groupId>io.github.stevenjwest</groupId>
 	<artifactId>High_Pass_Gaussian_Filter</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 
 
 	<name>High_Pass_Gaussian_Filter</name>
